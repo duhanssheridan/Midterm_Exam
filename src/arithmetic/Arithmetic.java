@@ -6,6 +6,7 @@
 package arithmetic;
 
 
+
 import java.util.Scanner;
 import static java.time.Clock.system;
 
@@ -15,22 +16,49 @@ import static java.time.Clock.system;
  * @author sivagamasrinivasan
  * 
  */
-public class Arithmetic 
-{
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) 
-    {
-       
-        ArithmeticBase r= new ArithmeticBase();
-        Scanner in= new Scanner(System.in);
-        int n= in.nextInt();
-        int m= in.nextInt();
-        double result = r.calculate(m,n);
-        System.out.println("result :" +result); 
-    
+
+public class Arithmetic {
+    public enum ArithmeticOperation {
+        PLUS("+"),
+        MINUS("-"),
+        TIMES("*"),
+        DIVIDES("/");
+
+        private final String symbol;
+
+        ArithmeticOperation(String symbol) {
+            this.symbol = symbol;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int m = in.nextInt();
+
+        for (ArithmeticOperation operation : ArithmeticOperation.values()) {
+            double result = calculate(operation, n, m);
+            System.out.println(operation.getSymbol() + " result: " + result);
+        }
+    }
+
+    public static double calculate(ArithmeticOperation operation, int n, int m) {
+        switch (operation) {
+            case PLUS:
+                return n + m;
+            case MINUS:
+                return n - m;
+            case TIMES:
+                return n * m;
+            case DIVIDES:
+                return (double) n / m;
+            default:
+                throw new IllegalArgumentException("Invalid operation: " + operation);
+        }
     }
 }
-
